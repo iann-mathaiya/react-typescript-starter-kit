@@ -1,7 +1,10 @@
-import { Fragment } from "react"
+import { Fragment, useState } from "react"
 
 export default function ListGroup() {
   let cities = ["New York", "London", "Nairobi", "Tokyo", "Sydney"]
+  const [selectedIndex, setSelectedIndex] = useState(-1)
+
+  const handleVisit = ( index: number ) => setSelectedIndex(index)
 
   return (
     <Fragment>
@@ -10,11 +13,11 @@ export default function ListGroup() {
         <h2 className=' text-stone-500 font-medium'>No cities added yet.</h2>
       )}
       <ul className='list-disc list-outside'>
-        {cities.map((city) => (
+        {cities.map((city, index) => (
           <li
             key={city}
-            onClick={(event) => console.log(`${city} visited`, event)}
-            className='text-stone-500 font-normal'
+            onClick={() => handleVisit(index)}
+            className={selectedIndex === index ? 'text-stone-600 font-semibold cursor-default' : 'text-stone-500 font-normal cursor-pointer'}
           >
             {city}
           </li>
