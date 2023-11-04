@@ -3,13 +3,18 @@ import { Fragment, useState } from "react"
 interface ListGroupProps {
   list: string[]
   heading: string
+  onSelectItem: (item: string) => void
 }
 
-export default function ListGroup({list, heading}: ListGroupProps) {
+export default function ListGroup({
+  list,
+  heading,
+  onSelectItem,
+}: ListGroupProps) {
   // let cities = ["New York", "London", "Nairobi", "Tokyo", "Sydney"]
   const [selectedIndex, setSelectedIndex] = useState(-1)
 
-  const handleVisit = ( index: number ) => setSelectedIndex(index)
+  const handleVisit = (index: number) => setSelectedIndex(index)
 
   return (
     <Fragment>
@@ -21,8 +26,15 @@ export default function ListGroup({list, heading}: ListGroupProps) {
         {list.map((item, index) => (
           <li
             key={item}
-            onClick={() => handleVisit(index)}
-            className={selectedIndex === index ? 'text-stone-600 font-semibold cursor-default' : 'text-stone-500 font-normal cursor-pointer'}
+            onClick={() => {
+              handleVisit(index)
+              onSelectItem(item)
+            }}
+            className={
+              selectedIndex === index
+                ? "text-stone-600 font-semibold cursor-default"
+                : "text-stone-500 font-normal cursor-pointer"
+            }
           >
             {item}
           </li>
