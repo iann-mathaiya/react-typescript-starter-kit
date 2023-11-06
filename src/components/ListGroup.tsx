@@ -32,8 +32,8 @@ export default function ListGroup({
             }}
             className={
               selectedIndex === index
-                ? "text-stone-600 font-semibold cursor-default"
-                : "text-stone-500 font-normal cursor-pointer"
+                ? "w-fit text-stone-600 font-semibold cursor-default"
+                : "w-fit text-stone-500 font-normal cursor-pointer"
             }
           >
             {item}
