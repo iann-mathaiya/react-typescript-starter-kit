@@ -17,7 +17,7 @@ export default function ListGroup({
   const handleVisit = (index: number) => setSelectedIndex(index)
 
   return (
-    <Fragment>
+    <div className="space-y-2">
       <h1 className='text-2xl text-slate-800 font-semibold'>{heading}</h1>
       {list.length === 0 && (
         <h2 className=' text-stone-500 font-medium'>No cities added yet.</h2>
@@ -40,6 +40,6 @@ export default function ListGroup({
           </li>
         ))}
       </ul>
-    </Fragment>
+    </div>
   )
 }

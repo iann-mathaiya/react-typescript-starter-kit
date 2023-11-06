@@ -15,7 +15,7 @@ export default function Button({
     <button
       type='button'
       onClick={onClick}
-      className={`${backgroundColor} py-1.5 px-3 w-fit text-white rounded-lg`}
+      className={`${backgroundColor} py-1.5 px-3 w-fit h-fit text-white rounded-lg`}
     >
       {children}
     </button>

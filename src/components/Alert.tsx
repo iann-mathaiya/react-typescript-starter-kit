@@ -3,9 +3,10 @@ import { CheckCircleIcon, XMarkIcon } from '@heroicons/react/24/solid'
 
 interface Props {
     children: ReactNode
+    onClose: () => void
 }
 
-export default function Alert({children} : Props) {
+export default function Alert({children, onClose} : Props) {
   return (
     <div className="rounded-md bg-green-50 p-4">
       <div className="flex">
@@ -19,6 +20,7 @@ export default function Alert({children} : Props) {
           <div className="-mx-1.5 -my-1.5">
             <button
               type="button"
+              onClick={onClose}
               className="inline-flex bg-green-50 rounded-md p-1.5 text-green-500 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-50 focus:ring-green-600"
             >
               <span className="sr-only">Dismiss</span>
