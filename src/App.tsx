@@ -5,9 +5,8 @@ import ListGroup from "./components/ListGroup"
 import { PaperAirplaneIcon } from "@heroicons/react/24/solid"
 
 export default function App() {
-  const [alertVisibility, setAlertVisiblity] = useState(true)
+  const [alertVisibility, setAlertVisiblity] = useState(false)
   const [cities, setCities] = useState<string[]>(["New York", "London", "Nairobi", "Tokyo", "Sydney"])
-  const [countries, setCountries] = useState<string[]>(["New Zealand", "Britain", "Kenya", "Japan", "Australia"])
 
   const handleSelectItem = (item: string) => {
     alert(`${item} selected`)
@@ -15,6 +14,7 @@ export default function App() {
 
   const handleAddCity = () => {
     setCities(prev => [...prev, 'CapeTown'])
+    setAlertVisiblity(true)
   }
 
   return (
@@ -22,7 +22,7 @@ export default function App() {
       {alertVisibility && (
         <Alert onClose={() => setAlertVisiblity(false)}>
           <div className='flex items-center gap-2 justify-center'>
-            Successfully deployed{" "}
+            City successfully added{" "}
             <PaperAirplaneIcon
               className='w-4 h-4 text-green-600 -rotate-45'
               aria-hidden
@@ -40,11 +40,6 @@ export default function App() {
         <Button onClick={handleAddCity}>Add New City</Button>
       </div>
 
-      <ListGroup
-        list={countries}
-        heading='Countries'
-        onSelectItem={handleSelectItem}
-      />
     </div>
   )
 }
