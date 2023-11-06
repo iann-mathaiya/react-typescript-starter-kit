@@ -1,4 +1,5 @@
 import Alert from "./components/Alert"
+import Button from "./components/Button"
 import ListGroup from "./components/ListGroup"
 import { PaperAirplaneIcon } from "@heroicons/react/24/solid"
 
@@ -8,6 +9,10 @@ export default function App() {
 
   const handleSelectItem = (item: string) => {
     alert(`${item} selected`)
+  }
+
+  const handleAddCity = () => {
+    cities.push('CapeTown')
   }
 
   return (
@@ -21,6 +26,10 @@ export default function App() {
           />
         </div>
       </Alert>
+
+      <div>
+        <Button onClick={handleAddCity}>Add New City</Button>
+      </div>
 
       <ListGroup
         list={cities}
