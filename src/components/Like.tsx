@@ -5,14 +5,18 @@ import { HeartIcon as SolidHeartIcon } from "@heroicons/react/24/solid"
 export default function Like() {
   const [isLiked, setIsLiked] = useState(true)
 
+  const toggle = () => {
+    setIsLiked(!isLiked)
+  }
+
   return (
     <div>
       {isLiked ? (
-        <button onClick={() => setIsLiked(false)}>
+        <button onClick={toggle}>
           <SolidHeartIcon className='w-6 h-6 text-red-500' aria-hidden />
         </button>
       ) : (
-        <button onClick={() => setIsLiked(true)}>
+        <button onClick={toggle}>
           <HeartIcon className='w-6 h-6 text-stone-600' aria-hidden />
         </button>
       )}
