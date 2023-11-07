@@ -4,6 +4,8 @@ import Alert from "./components/Alert"
 import Button from "./components/Button"
 import ListGroup from "./components/ListGroup"
 import { PaperAirplaneIcon } from "@heroicons/react/24/solid"
+import NavBar from "./components/NavBar"
+import Cart from "./components/Cart"
 
 export default function App() {
   const [alertVisibility, setAlertVisiblity] = useState(false)
@@ -64,16 +66,12 @@ export default function App() {
         </Alert>
       )}
 
-      <div className='flex justify-between'>
-        <ListGroup
-          list={cities}
-          heading='Cities'
-          onSelectItem={handleSelectItem}
-        />
-        <Button onClick={handleAddCity}>Add New City</Button>
+      <div className="flex items-center justify-between">
+        <Like />
+        <NavBar cartItemsCount={cartItems.length} />
       </div>
 
-      <Like />
+      <Cart cartItems={cartItems} />
 
       <div>
         <div className='flex justify-between items-start'>
@@ -92,7 +90,10 @@ export default function App() {
           <div className='flex items-center gap-2'>
             <p className='text-sm text-slate-500'>Other drinks:</p>
             {otherDrinks.map((drink, index) => (
-              <p className='py-1 px-2 text-sm text-slate-500 bg-slate-100 rounded-md'>
+              <p
+                key={index}
+                className='py-1 px-2 text-sm text-slate-500 bg-slate-100 rounded-md'
+              >
                 {drink}
               </p>
             ))}
@@ -116,6 +117,15 @@ export default function App() {
           </h4>
         </div>
         <Button onClick={handleUpdateCustomer}>Update Customer Info</Button>
+      </div>
+
+      <div className='flex justify-between'>
+        <ListGroup
+          list={cities}
+          heading='Delivery Cities'
+          onSelectItem={handleSelectItem}
+        />
+        <Button onClick={handleAddCity}>Add New City</Button>
       </div>
     </div>
   )

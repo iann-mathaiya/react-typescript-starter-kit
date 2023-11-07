@@ -3,7 +3,7 @@ import { Fragment, useState } from "react"
 interface ListGroupProps {
   list: string[]
   heading: string
-  onSelectItem: (item: string) => void
+  onSelectItem?: (item: string) => void
 }
 
 export default function ListGroup({
@@ -28,7 +28,7 @@ export default function ListGroup({
             key={item}
             onClick={() => {
               handleVisit(index)
-              onSelectItem(item)
+              onSelectItem!(item)
             }}
             className={
               selectedIndex === index
