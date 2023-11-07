@@ -18,6 +18,11 @@ export default function App() {
     title: "Americano",
     price: 4.99,
   })
+  const [otherDrinks, setOtherDrinks] = useState<string[]>([
+    "Espresso",
+    "Caffe Latte",
+    "Iced Coffee",
+  ])
   const [customer, setCustomer] = useState({
     name: "Ian Mathaiya",
     deliveryAddress: {
@@ -39,6 +44,10 @@ export default function App() {
     setDrink({ ...drink, price: 5.99 })
   }
 
+  const handleAddDrink = () => {
+    setOtherDrinks((prev) => [...prev, "Cappuccino"])
+  }
+
   const handleUpdateCustomer = () => {
     setCustomer({
       ...customer,
@@ -47,7 +56,7 @@ export default function App() {
   }
 
   return (
-    <div className='max-w-2xl mx-auto p-4 sm:p-8 space-y-8'>
+    <div className='max-w-3xl mx-auto p-4 sm:p-8 space-y-10'>
       {alertVisibility && (
         <Alert onClose={() => setAlertVisiblity(false)}>
           <div className='flex items-center gap-2 justify-center'>
@@ -71,16 +80,35 @@ export default function App() {
 
       <Like />
 
-      <div className='flex justify-between items-start'>
-        <div>
-          <h3 className='text-xl text-slate-800 font-semibold'>
-            {drink.title}
-          </h3>
-          <h4 className='text-base text-slate-500 font-medium'>
-            {drink.price}
-          </h4>
+      <div>
+        <div className='flex justify-between items-start'>
+          <div className='space-y-1'>
+            <h3 className='text-xl text-slate-800 font-semibold'>
+              {drink.title}
+            </h3>
+            <h4 className='text-base text-slate-500 font-medium'>
+              {drink.price}
+            </h4>
+          </div>
+
+          <Button onClick={handleUpdateDrink}>Update Drink</Button>
         </div>
-        <Button onClick={handleUpdateDrink}>Update Drink</Button>
+        <div className='flex justify-between gap-2'>
+          <div className='flex items-center gap-2'>
+          <p className='text-sm text-slate-500'>Other drinks:</p>
+          {otherDrinks.map((drink, index) => (
+            <p className='py-1 px-2 text-sm text-slate-500 bg-slate-100 rounded-md'>
+              {drink}
+            </p>
+          ))}
+          </div>
+          <button
+            onClick={handleAddDrink}
+            className='py-1 px-2 text-sm w-fit h-fit text-slate-500 hover:text-white bg-slate-100 hover:bg-slate-800 rounded-md'
+          >
+            Add Drink +
+          </button>
+        </div>
       </div>
 
       <div className='flex justify-between items-start'>
