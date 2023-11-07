@@ -9,7 +9,15 @@ import Cart from "./components/Cart"
 
 export default function App() {
   const [alertVisibility, setAlertVisiblity] = useState(false)
-  const [cartItems, setCartitems] = useState(["Socks", "Hoodies", "Pants"])
+  const [cartItems, setCartitems] = useState([
+    "Bagel 🥯",
+    "Croissant 🥐",
+    "Cookies 🍪",
+  ])
+  const [employees, setEmployees] = useState([
+    { id: 1, details: { name: "Eren Yeager", role: "Barista" } },
+    { id: 2, details: { name: "Mikasa Ackerman", role: "Baker" } },
+  ])
   const [cities, setCities] = useState(["Nairobi", "Tokyo", "Sydney"])
   const [drink, setDrink] = useState({
     title: "Americano",
@@ -21,9 +29,9 @@ export default function App() {
     "Iced Coffee",
   ])
   const [customer, setCustomer] = useState({
-    name: "Ian Mathaiya",
+    name: "Armin Arlert",
     deliveryAddress: {
-      city: "Nairobi",
+      city: "Tokyo",
       zipCode: 10100,
     },
   })
@@ -56,6 +64,19 @@ export default function App() {
     })
   }
 
+  const handleUpdateEmployeeInfo = () => {
+    setEmployees(
+      employees.map((employee) =>
+        employee.id === 1
+          ? {
+              ...employee,
+              details: { ...employee.details, name: "Levi Ackerman" },
+            }
+          : employee
+      )
+    )
+  }
+
   return (
     <div className='max-w-3xl mx-auto p-4 sm:p-8 space-y-10'>
       {alertVisibility && (
@@ -70,7 +91,7 @@ export default function App() {
         </Alert>
       )}
 
-      <div className="flex items-center justify-between">
+      <div className='flex items-center justify-between'>
         <Like />
         <NavBar cartItemsCount={cartItems.length} />
       </div>
@@ -121,6 +142,17 @@ export default function App() {
           </h4>
         </div>
         <Button onClick={handleUpdateCustomer}>Update Customer Info</Button>
+      </div>
+
+      <div className='flex justify-between'>
+        <ListGroup
+          list={employees.map(
+            (employee) => `${employee.details.role} - ${employee.details.name}`
+          )}
+          heading='Employees'
+          onSelectItem={handleSelectItem}
+        />
+        <Button onClick={handleUpdateEmployeeInfo}>Update Eren's Info</Button>
       </div>
 
       <div className='flex justify-between'>
