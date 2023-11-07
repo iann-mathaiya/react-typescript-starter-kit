@@ -165,8 +165,8 @@ export default function App() {
         <Button onClick={handleAddCity}>Add New City</Button>
       </div>
 
-        <div>
-      <div className="space-y-4">
+      <div>
+        <div className='space-y-4'>
           <h1 className='text-2xl text-slate-800 font-semibold'>Reviews</h1>
           <ExpandableText maxCharacters={200}>
             I recently enjoyed a cup of coffee at Sweet Sweet Kahawa, and it was
@@ -179,8 +179,26 @@ export default function App() {
             explore more of their offerings. If you love coffee, this place is a
             must-visit.
           </ExpandableText>
-          <ExpandableText>
-            Very Tasty Coffee
+          <ExpandableText>Very Tasty Coffee</ExpandableText>
+
+          <ExpandableText maxCharacters={400}>
+            I recently had the pleasure of savoring a cup of coffee at Sweet
+            Sweet Kahawa, and it was an absolutely delightful experience. From
+            the moment I stepped in, the cozy ambiance and the inviting aroma of
+            freshly brewed coffee created the perfect setting. The barista's
+            passion for their craft was evident in every sip of the coffee. I
+            ordered a Sweet Sweet Kahawa and was treated to a perfectly balanced
+            brew. The coffee had a rich, robust flavor with just the right hint
+            of sweetness, making it a true delight for the taste buds. It was
+            evident that the coffee beans had been carefully sourced and
+            expertly roasted. The service was exceptional, and the staff was not
+            only friendly but also knowledgeable about their coffee offerings.
+            They took the time to explain the unique characteristics of the
+            coffee I chose, making the experience all the more engaging. As I
+            enjoyed my coffee, I couldn't help but appreciate the attention to
+            detail that went into the entire presentation. From the beautiful
+            latte art to the well-crafted mugs, every aspect of the coffee's
+            presentation was aesthetically pleasing.
           </ExpandableText>
         </div>
       </div>
