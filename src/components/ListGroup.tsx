@@ -20,7 +20,7 @@ export default function ListGroup({
     <div className="space-y-2">
       <h1 className='text-2xl text-slate-800 font-semibold'>{heading}</h1>
       {list.length === 0 && (
-        <h2 className=' text-stone-500 font-medium'>No cities added yet.</h2>
+        <h2 className=' text-stone-500 font-medium'>No items added yet.</h2>
       )}
       <ul className='list-disc list-outside'>
         {list.map((item, index) => (

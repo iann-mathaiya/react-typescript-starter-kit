@@ -32,6 +32,10 @@ export default function App() {
     alert(`${item} selected`)
   }
 
+  const handleClearCartItems = () => {
+    setCartitems([])
+  }
+
   const handleAddCity = () => {
     setCities((prev) => [...prev, "CapeTown"])
     setAlertVisiblity(true)
@@ -71,7 +75,7 @@ export default function App() {
         <NavBar cartItemsCount={cartItems.length} />
       </div>
 
-      <Cart cartItems={cartItems} />
+      <Cart cartItems={cartItems} onClear={handleClearCartItems} />
 
       <div>
         <div className='flex justify-between items-start'>
