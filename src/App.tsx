@@ -1,24 +1,19 @@
 import { useState } from "react"
+import Like from "./components/Like"
 import Alert from "./components/Alert"
 import Button from "./components/Button"
 import ListGroup from "./components/ListGroup"
 import { PaperAirplaneIcon } from "@heroicons/react/24/solid"
-import Like from "./components/Like"
 
 export default function App() {
   const [alertVisibility, setAlertVisiblity] = useState(false)
-  const [cities, setCities] = useState<string[]>([
-    "New York",
-    "London",
-    "Nairobi",
-    "Tokyo",
-    "Sydney",
-  ])
+  const [cartItems, setCartitems] = useState(["Socks", "Hoodies", "Pants"])
+  const [cities, setCities] = useState(["Nairobi", "Tokyo", "Sydney"])
   const [drink, setDrink] = useState({
     title: "Americano",
     price: 4.99,
   })
-  const [otherDrinks, setOtherDrinks] = useState<string[]>([
+  const [otherDrinks, setOtherDrinks] = useState([
     "Espresso",
     "Caffe Latte",
     "Iced Coffee",
@@ -95,12 +90,12 @@ export default function App() {
         </div>
         <div className='flex justify-between gap-2'>
           <div className='flex items-center gap-2'>
-          <p className='text-sm text-slate-500'>Other drinks:</p>
-          {otherDrinks.map((drink, index) => (
-            <p className='py-1 px-2 text-sm text-slate-500 bg-slate-100 rounded-md'>
-              {drink}
-            </p>
-          ))}
+            <p className='text-sm text-slate-500'>Other drinks:</p>
+            {otherDrinks.map((drink, index) => (
+              <p className='py-1 px-2 text-sm text-slate-500 bg-slate-100 rounded-md'>
+                {drink}
+              </p>
+            ))}
           </div>
           <button
             onClick={handleAddDrink}
