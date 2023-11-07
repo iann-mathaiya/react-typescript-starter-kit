@@ -6,6 +6,7 @@ import ListGroup from "./components/ListGroup"
 import { PaperAirplaneIcon } from "@heroicons/react/24/solid"
 import NavBar from "./components/NavBar"
 import Cart from "./components/Cart"
+import ExpandableText from "./components/ExpandableText"
 
 export default function App() {
   const [alertVisibility, setAlertVisiblity] = useState(false)
@@ -162,6 +163,26 @@ export default function App() {
           onSelectItem={handleSelectItem}
         />
         <Button onClick={handleAddCity}>Add New City</Button>
+      </div>
+
+        <div>
+      <div className="space-y-4">
+          <h1 className='text-2xl text-slate-800 font-semibold'>Reviews</h1>
+          <ExpandableText maxCharacters={200}>
+            I recently enjoyed a cup of coffee at Sweet Sweet Kahawa, and it was
+            an absolute treat. The Sweet Sweet Kahawa was perfectly balanced,
+            with a rich, robust flavor and a hint of sweetness. The staff was
+            friendly and knowledgeable, adding to the overall positive
+            experience. I was impressed by the attention to detail, from the
+            beautiful latte art to the well-crafted mugs. It was more than just
+            coffee; it was a delightful experience. I can't wait to return and
+            explore more of their offerings. If you love coffee, this place is a
+            must-visit.
+          </ExpandableText>
+          <ExpandableText>
+            Very Tasty Coffee
+          </ExpandableText>
+        </div>
       </div>
     </div>
   )
