@@ -3,6 +3,7 @@ import Alert from "./components/Alert"
 import Button from "./components/Button"
 import ListGroup from "./components/ListGroup"
 import { PaperAirplaneIcon } from "@heroicons/react/24/solid"
+import Like from "./components/Like"
 
 export default function App() {
   const [alertVisibility, setAlertVisiblity] = useState(false)
@@ -39,6 +40,8 @@ export default function App() {
         />
         <Button onClick={handleAddCity}>Add New City</Button>
       </div>
+
+      <Like />
 
     </div>
   )
