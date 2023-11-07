@@ -7,15 +7,33 @@ import Like from "./components/Like"
 
 export default function App() {
   const [alertVisibility, setAlertVisiblity] = useState(false)
-  const [cities, setCities] = useState<string[]>(["New York", "London", "Nairobi", "Tokyo", "Sydney"])
+  const [cities, setCities] = useState<string[]>([
+    "New York",
+    "London",
+    "Nairobi",
+    "Tokyo",
+    "Sydney",
+  ])
+  const [drink, setDrink] = useState({
+    title: "Americano",
+    price: 4.99,
+  })
 
   const handleSelectItem = (item: string) => {
     alert(`${item} selected`)
   }
 
   const handleAddCity = () => {
-    setCities(prev => [...prev, 'CapeTown'])
+    setCities((prev) => [...prev, "CapeTown"])
     setAlertVisiblity(true)
+  }
+
+  const handleUpdateDrink = () => {
+    const newDrink = {
+      ...drink,
+      price: 5.99,
+    }
+    setDrink(newDrink)
   }
 
   return (
@@ -43,6 +61,13 @@ export default function App() {
 
       <Like />
 
+      <div className="max-w-md flex justify-between items-start">
+        <div>
+          <h3 className='text-xl text-slate-800 font-semibold'>{drink.title}</h3>
+          <h4 className='text-base text-slate-500 font-medium'>{drink.price}</h4>
+        </div>
+        <Button onClick={handleUpdateDrink}>Update Drink</Button>
+      </div>
     </div>
   )
 }
