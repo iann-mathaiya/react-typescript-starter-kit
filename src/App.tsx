@@ -18,6 +18,13 @@ export default function App() {
     title: "Americano",
     price: 4.99,
   })
+  const [customer, setCustomer] = useState({
+    name: "Ian Mathaiya",
+    deliveryAddress: {
+      city: "Nairobi",
+      zipCode: 10100,
+    },
+  })
 
   const handleSelectItem = (item: string) => {
     alert(`${item} selected`)
@@ -29,15 +36,18 @@ export default function App() {
   }
 
   const handleUpdateDrink = () => {
-    const newDrink = {
-      ...drink,
-      price: 5.99,
-    }
-    setDrink(newDrink)
+    setDrink({ ...drink, price: 5.99 })
+  }
+
+  const handleUpdateCustomer = () => {
+    setCustomer({
+      ...customer,
+      deliveryAddress: { ...customer.deliveryAddress, zipCode: 50400 },
+    })
   }
 
   return (
-    <div className='max-w-7xl mx-auto p-4 sm:p-8 space-y-8'>
+    <div className='max-w-2xl mx-auto p-4 sm:p-8 space-y-8'>
       {alertVisibility && (
         <Alert onClose={() => setAlertVisiblity(false)}>
           <div className='flex items-center gap-2 justify-center'>
@@ -61,12 +71,28 @@ export default function App() {
 
       <Like />
 
-      <div className="max-w-md flex justify-between items-start">
+      <div className='flex justify-between items-start'>
         <div>
-          <h3 className='text-xl text-slate-800 font-semibold'>{drink.title}</h3>
-          <h4 className='text-base text-slate-500 font-medium'>{drink.price}</h4>
+          <h3 className='text-xl text-slate-800 font-semibold'>
+            {drink.title}
+          </h3>
+          <h4 className='text-base text-slate-500 font-medium'>
+            {drink.price}
+          </h4>
         </div>
         <Button onClick={handleUpdateDrink}>Update Drink</Button>
+      </div>
+
+      <div className='flex justify-between items-start'>
+        <div>
+          <h3 className='text-xl text-slate-800 font-semibold'>
+            {customer.name}
+          </h3>
+          <h4 className='text-base text-slate-500 font-medium'>
+            {customer.deliveryAddress.zipCode} - {customer.deliveryAddress.city}
+          </h4>
+        </div>
+        <Button onClick={handleUpdateCustomer}>Update Customer Info</Button>
       </div>
     </div>
   )
