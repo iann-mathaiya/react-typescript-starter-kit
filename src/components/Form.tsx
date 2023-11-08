@@ -6,9 +6,14 @@ export default function Form() {
     const menuItemRef = useRef<HTMLInputElement>(null)
     const priceRef = useRef<HTMLInputElement>(null)
 
+    const menuItem = {item: '', price: 0}
+
     const handleSumbit = (event: FormEvent) => {
         event.preventDefault()
-        console.log(menuItemRef.current?.value, priceRef.current?.value)
+        menuItem.item = menuItemRef.current!.value
+        menuItem.price = parseFloat(priceRef.current!.value)
+
+        console.log(menuItem)
     }
 
   return (
