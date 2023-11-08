@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { FieldValues, useForm } from "react-hook-form"
 
 const schema = z.object({
+  category: z.string({ invalid_type_error: "Price is required" }),
   item: z
     .string()
     .min(4, { message: "Item name must be alleast 4 characters" }),
@@ -73,7 +74,29 @@ export default function Form() {
         </div>
       </div>
 
-      <SubmitButton disabled={!isValid} backgroundColor='bg-sky-600'>Submit</SubmitButton>
+      <div className='mb-3'>
+        <label
+          htmlFor='category'
+          className='block text-sm font-medium leading-6 text-gray-900'
+        >
+          Category
+        </label>
+        <div className='mt-2'>
+          <select
+            id='category'
+            placeholder="Select one option"
+            className='block w-full rounded-md border-0 py-2 px-2.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-500 sm:text-sm sm:leading-6'
+          >
+            <option>Coffee</option>
+            <option>Pastry</option>
+            <option>Fast Food</option>
+          </select>
+        </div>
+      </div>
+
+      <SubmitButton disabled={!isValid} backgroundColor='bg-sky-600'>
+        Submit
+      </SubmitButton>
     </form>
   )
 }
