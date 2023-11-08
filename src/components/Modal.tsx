@@ -5,7 +5,7 @@ import { XMarkIcon } from "@heroicons/react/24/outline"
 import Form from "./Form"
 
 export default function Modal() {
-  let [isOpen, setIsOpen] = useState(true)
+  let [isOpen, setIsOpen] = useState(false)
 
   function closeModal() {
     setIsOpen(false)
