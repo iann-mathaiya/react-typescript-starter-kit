@@ -5,9 +5,11 @@ import Alert from "./components/Alert"
 import NavBar from "./components/NavBar"
 import Button from "./components/Button"
 import Reviews from "./components/Reviews"
+import { menuItems } from "./lib/menuItems"
 import ListGroup from "./components/ListGroup"
 import { PaperAirplaneIcon } from "@heroicons/react/24/solid"
 import MenuList from "./components/menu-tracker/components/MenuList"
+import MenuItemForm from "./components/menu-tracker/components/MenuItemForm"
 
 export default function App() {
   const [alertVisibility, setAlertVisiblity] = useState(false)
@@ -23,14 +25,7 @@ export default function App() {
     { id: 2, details: { name: "Mikasa Ackerman", role: "Baker" } },
   ])
 
-  const [menu, setMenu] = useState([
-    { id: 1, item: "Milk 🥛", price: 2.99, category: "Beverage" },
-    { id: 2, item: "Bagel 🥯", price: 5.99, category: "Pastry" },
-    { id: 3, item: "Bubble Tea 🧋", price: 3.99, category: "Beverage" },
-    { id: 4, item: "Croissant 🥐", price: 7.99, category: "Pastry" },
-    { id: 5, item: "Iced Coffee 🥤", price: 3.99, category: "Beverage" },
-    { id: 6, item: "Cupcake 🧁", price: 3.99, category: "Pastry" },
-  ])
+  const [menu, setMenu] = useState(menuItems)
 
   const [cities, setCities] = useState(["Nairobi", "Tokyo", "Sydney"])
 
@@ -124,6 +119,12 @@ export default function App() {
         }
       />
 
+      <MenuItemForm
+        onSubmit={(menuItem) =>
+          setMenu([...menu, { id: menu.length + 1, ...menuItem }])
+        }
+      />
+
       <div>
         <div className='flex justify-between items-start'>
           <div className='space-y-1'>
@@ -191,7 +192,6 @@ export default function App() {
       </div>
 
       <Reviews />
-
     </div>
   )
 }

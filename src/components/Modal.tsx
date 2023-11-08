@@ -1,11 +1,14 @@
 import Button from "./Button"
 import { Fragment, useState } from "react"
+import { menuItems } from "../lib/menuItems"
 import { Dialog, Transition } from "@headlessui/react"
 import { XMarkIcon } from "@heroicons/react/24/outline"
 import MenuItemForm from "./menu-tracker/components/MenuItemForm"
+import { menuItemFormData } from "../lib/schema"
 
 export default function Modal() {
   let [isOpen, setIsOpen] = useState(false)
+  const [menu, setMenu] = useState(menuItems)
 
   function closeModal() {
     setIsOpen(false)
@@ -13,6 +16,12 @@ export default function Modal() {
 
   function openModal() {
     setIsOpen(true)
+    console.log(menu)
+  }
+
+  function handleSubmit(menuItem: menuItemFormData) {
+    setMenu([...menu, { id: menu.length + 1, ...menuItem }])
+    console.log(menu)
   }
 
   return (
@@ -69,7 +78,7 @@ export default function Modal() {
                   </div>
 
                   <div className='mt-4'>
-                    <MenuItemForm />
+                    <MenuItemForm onSubmit={handleSubmit} />
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

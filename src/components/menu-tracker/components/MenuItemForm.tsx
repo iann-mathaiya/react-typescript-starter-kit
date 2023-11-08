@@ -1,36 +1,19 @@
-import { z } from "zod"
+import { useForm } from "react-hook-form"
 import SubmitButton from "../../SubmitButton"
 import { categories } from "../../../lib/categories"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { FieldValues, useForm } from "react-hook-form"
+import { menuItemFormData, menuItemSchema } from "../../../lib/schema"
 
-const schema = z.object({
-  category: z.enum(categories, {
-    errorMap: () => ({ message: "Category is required." }),
-  }),
-  item: z
-    .string()
-    .min(4, { message: "Item name must be at least 4 characters." }),
-  price: z
-    .number({
-      required_error: "Price is required.",
-      invalid_type_error: "Price is must be a number.",
-    })
-    .min(1, { message: "Price must be atleast $1.00" }),
-})
+interface Props {
+  onSubmit: (data: menuItemFormData) => void
+}
 
-type FormData = z.infer<typeof schema>
-
-export default function MenuItemForm() {
+export default function MenuItemForm({onSubmit} : Props) {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>({ resolver: zodResolver(schema) })
-
-  const onSubmit = (data: FieldValues) => {
-    console.log(data)
-  }
+  } = useForm<menuItemFormData>({ resolver: zodResolver(menuItemSchema) })
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -92,6 +75,7 @@ export default function MenuItemForm() {
           <select
             id='category'
             placeholder='Select one option'
+            {...register('category')}
             className='block w-full rounded-md border-0 py-2 px-2.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-500 sm:text-sm sm:leading-6'
           >
             <option value=''>Select a category</option>
