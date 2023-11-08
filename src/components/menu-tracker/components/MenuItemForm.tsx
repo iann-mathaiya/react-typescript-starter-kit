@@ -5,12 +5,17 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { FieldValues, useForm } from "react-hook-form"
 
 const schema = z.object({
-  category: z.enum(categories, {required_error: "Category is required"}),
+  category: z.enum(categories, {
+    errorMap: () => ({ message: "Category is required." }),
+  }),
   item: z
     .string()
-    .min(4, { message: "Item name must be at least 4 characters" }),
+    .min(4, { message: "Item name must be at least 4 characters." }),
   price: z
-    .number({ required_error: 'Price is required', invalid_type_error: "Price is must be a number" })
+    .number({
+      required_error: "Price is required.",
+      invalid_type_error: "Price is must be a number.",
+    })
     .min(1, { message: "Price must be atleast $1.00" }),
 })
 
@@ -89,7 +94,7 @@ export default function MenuItemForm() {
             placeholder='Select one option'
             className='block w-full rounded-md border-0 py-2 px-2.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-500 sm:text-sm sm:leading-6'
           >
-            <option disabled>Select a category</option>
+            <option value=''>Select a category</option>
             {categories.map((category) => (
               <option key={category} value={category}>
                 {category}
@@ -105,7 +110,7 @@ export default function MenuItemForm() {
         </div>
       </div>
 
-      <SubmitButton >Submit</SubmitButton>
+      <SubmitButton>Submit</SubmitButton>
     </form>
   )
 }
