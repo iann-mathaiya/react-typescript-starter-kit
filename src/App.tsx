@@ -8,28 +8,44 @@ import Reviews from "./components/Reviews"
 import ListGroup from "./components/ListGroup"
 import { PaperAirplaneIcon } from "@heroicons/react/24/solid"
 import Form from "./components/Form"
+import MenuList from "./components/menu-tracker/components/MenuList"
 
 export default function App() {
   const [alertVisibility, setAlertVisiblity] = useState(false)
+
   const [cartItems, setCartitems] = useState([
     "Bagel 🥯",
     "Croissant 🥐",
     "Cookies 🍪",
   ])
+
   const [employees, setEmployees] = useState([
     { id: 1, details: { name: "Eren Yeager", role: "Barista" } },
     { id: 2, details: { name: "Mikasa Ackerman", role: "Baker" } },
   ])
+
+  const [menu, setMenu] = useState([
+    { id: 1, item: "Milk 🥛", price: 2.99, category: "Beverage" },
+    { id: 2, item: "Bagel 🥯", price: 5.99, category: "Pastry" },
+    { id: 3, item: "Bubble Tea 🧋", price: 3.99, category: "Beverage" },
+    { id: 4, item: "Croissant 🥐", price: 7.99, category: "Pastry" },
+    { id: 5, item: "Iced Coffee 🥤", price: 3.99, category: "Beverage" },
+    { id: 6, item: "Cupcake 🧁", price: 3.99, category: "Pastry" },
+  ])
+
   const [cities, setCities] = useState(["Nairobi", "Tokyo", "Sydney"])
+
   const [drink, setDrink] = useState({
     title: "Americano",
     price: 4.99,
   })
+
   const [otherDrinks, setOtherDrinks] = useState([
     "Espresso",
     "Caffe Latte",
     "Iced Coffee",
   ])
+
   const [customer, setCustomer] = useState({
     name: "Armin Arlert",
     deliveryAddress: {
@@ -99,6 +115,13 @@ export default function App() {
       </div>
 
       <Cart cartItems={cartItems} onClear={handleClearCartItems} />
+
+      <MenuList
+        heading='Menu'
+        description='Available items you can order'
+        menu={menu}
+        onDelete={(id) => setMenu(menu.filter(menuItem => menuItem.id !== id))}
+      />
 
       <div>
         <div className='flex justify-between items-start'>
