@@ -7,6 +7,7 @@ import Button from "./components/Button"
 import Reviews from "./components/Reviews"
 import ListGroup from "./components/ListGroup"
 import { PaperAirplaneIcon } from "@heroicons/react/24/solid"
+import Form from "./components/Form"
 
 export default function App() {
   const [alertVisibility, setAlertVisiblity] = useState(false)
@@ -166,6 +167,8 @@ export default function App() {
       </div>
 
       <Reviews />
+
+      <Form />
     </div>
   )
 }

@@ -13,7 +13,7 @@ export default function Like() {
     <div>
       {isLiked ? (
         <button onClick={toggle}>
-          <SolidHeartIcon className='w-6 h-6 text-red-500' aria-hidden />
+          <SolidHeartIcon className='w-6 h-6 text-sky-500' aria-hidden />
         </button>
       ) : (
         <button onClick={toggle}>
