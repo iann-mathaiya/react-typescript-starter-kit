@@ -1,6 +1,6 @@
+import { useState } from "react"
 import Avatar from "boring-avatars"
 import ExpandableText from "./ExpandableText"
-import { useState } from "react"
 
 export default function Reviews() {
   const [reviews, setReviews] = useState([

@@ -1,5 +1,5 @@
-import { useState } from "react"
 import Modal from "../../Modal"
+import { useState } from "react"
 import MenuFilter from "./MenuFilter"
 
 interface Menu {
@@ -38,7 +38,7 @@ export default function MenuList({
           <p className='mt-2 text-sm text-gray-700'>{description}</p>
         </div>
 
-        <div className='mt-4 flex gap-2 items-center justify-center'>
+        <div className='mt-4 flex gap-4 items-center justify-center'>
           <MenuFilter
             onSelectCategory={(category) => setSelectedCategory(category)}
           />

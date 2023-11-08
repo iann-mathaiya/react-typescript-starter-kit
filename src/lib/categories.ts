@@ -1,1 +1,1 @@
-export const categories = ['Beverage', 'Pastry', 'Fast Food']
+export const categories = ['Beverage', 'Pastry', 'Fast Food'] as const
