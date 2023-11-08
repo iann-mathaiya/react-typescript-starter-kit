@@ -18,7 +18,7 @@ export default function Form() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<FormData>({ resolver: zodResolver(schema) })
   console.log(register("item"))
 
@@ -73,7 +73,7 @@ export default function Form() {
         </div>
       </div>
 
-      <SubmitButton backgroundColor='bg-sky-600'>Submit</SubmitButton>
+      <SubmitButton disabled={!isValid} backgroundColor='bg-sky-600'>Submit</SubmitButton>
     </form>
   )
 }
