@@ -10,13 +10,14 @@ interface Props {
 
 export default function MenuItemForm({onSubmit} : Props) {
   const {
+    reset,
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<menuItemFormData>({ resolver: zodResolver(menuItemSchema) })
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(data => {onSubmit(data); reset()})}>
       <div className='mb-3'>
         <label
           htmlFor='menu-item-name'

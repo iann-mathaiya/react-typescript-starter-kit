@@ -1,10 +1,14 @@
 import Button from "./Button"
 import { Fragment, useState } from "react"
 import { menuItems } from "../lib/menuItems"
+import { menuItemFormData } from "../lib/schema"
 import { Dialog, Transition } from "@headlessui/react"
 import { XMarkIcon } from "@heroicons/react/24/outline"
 import MenuItemForm from "./menu-tracker/components/MenuItemForm"
-import { menuItemFormData } from "../lib/schema"
+
+interface Props {
+  onSubmit: (data: menuItemFormData) => void
+}
 
 export default function Modal() {
   let [isOpen, setIsOpen] = useState(false)
