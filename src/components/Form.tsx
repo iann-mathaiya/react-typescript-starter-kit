@@ -21,7 +21,6 @@ export default function Form() {
     handleSubmit,
     formState: { errors, isValid },
   } = useForm<FormData>({ resolver: zodResolver(schema) })
-  console.log(register("item"))
 
   const onSubmit = (data: FieldValues) => {}
 
@@ -84,17 +83,18 @@ export default function Form() {
         <div className='mt-2'>
           <select
             id='category'
-            placeholder="Select one option"
+            placeholder='Select one option'
             className='block w-full rounded-md border-0 py-2 px-2.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-500 sm:text-sm sm:leading-6'
           >
-            <option>Coffee</option>
-            <option>Pastry</option>
-            <option>Fast Food</option>
+            <option value=''>All Categories</option>
+            <option value='Beverage'>Beverage</option>
+            <option value='Pastry'>Pastry</option>
+            <option value='Fast Food'>Fast Food</option>
           </select>
         </div>
       </div>
 
-      <SubmitButton disabled={!isValid} backgroundColor='bg-sky-600'>
+      <SubmitButton disabled={!isValid}>
         Submit
       </SubmitButton>
     </form>

@@ -9,6 +9,7 @@ import ListGroup from "./components/ListGroup"
 import { PaperAirplaneIcon } from "@heroicons/react/24/solid"
 import Form from "./components/Form"
 import MenuList from "./components/menu-tracker/components/MenuList"
+import MenuFilter from "./components/menu-tracker/components/MenuFilter"
 
 export default function App() {
   const [alertVisibility, setAlertVisiblity] = useState(false)
@@ -32,6 +33,12 @@ export default function App() {
     { id: 5, item: "Iced Coffee 🥤", price: 3.99, category: "Beverage" },
     { id: 6, item: "Cupcake 🧁", price: 3.99, category: "Pastry" },
   ])
+
+  const [selectedCategory, setSelectedCategory] = useState("")
+
+  const filteredMenu = selectedCategory
+    ? menu.filter((menuItem) => menuItem.category === selectedCategory)
+    : menu
 
   const [cities, setCities] = useState(["Nairobi", "Tokyo", "Sydney"])
 
@@ -116,11 +123,17 @@ export default function App() {
 
       <Cart cartItems={cartItems} onClear={handleClearCartItems} />
 
+      <MenuFilter
+        onSelectCategory={(category) => setSelectedCategory(category)}
+      />
+
       <MenuList
         heading='Menu'
         description='Available items you can order'
-        menu={menu}
-        onDelete={(id) => setMenu(menu.filter(menuItem => menuItem.id !== id))}
+        menu={filteredMenu}
+        onDelete={(id) =>
+          setMenu(menu.filter((menuItem) => menuItem.id !== id))
+        }
       />
 
       <div>
@@ -138,7 +151,7 @@ export default function App() {
         </div>
         <div className='flex justify-between gap-2'>
           <div className='flex items-center gap-2'>
-            <p className='text-sm text-slate-500'>Other drinks:</p>
+            <p className='text-sm text-slate-500'>Similar drinks:</p>
             {otherDrinks.map((drink, index) => (
               <p
                 key={index}
@@ -191,7 +204,6 @@ export default function App() {
 
       <Reviews />
 
-      <Form />
     </div>
   )
 }
