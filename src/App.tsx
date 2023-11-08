@@ -7,9 +7,7 @@ import Button from "./components/Button"
 import Reviews from "./components/Reviews"
 import ListGroup from "./components/ListGroup"
 import { PaperAirplaneIcon } from "@heroicons/react/24/solid"
-import Form from "./components/Form"
 import MenuList from "./components/menu-tracker/components/MenuList"
-import MenuFilter from "./components/menu-tracker/components/MenuFilter"
 
 export default function App() {
   const [alertVisibility, setAlertVisiblity] = useState(false)
@@ -33,12 +31,6 @@ export default function App() {
     { id: 5, item: "Iced Coffee 🥤", price: 3.99, category: "Beverage" },
     { id: 6, item: "Cupcake 🧁", price: 3.99, category: "Pastry" },
   ])
-
-  const [selectedCategory, setSelectedCategory] = useState("")
-
-  const filteredMenu = selectedCategory
-    ? menu.filter((menuItem) => menuItem.category === selectedCategory)
-    : menu
 
   const [cities, setCities] = useState(["Nairobi", "Tokyo", "Sydney"])
 
@@ -123,14 +115,10 @@ export default function App() {
 
       <Cart cartItems={cartItems} onClear={handleClearCartItems} />
 
-      <MenuFilter
-        onSelectCategory={(category) => setSelectedCategory(category)}
-      />
-
       <MenuList
         heading='Menu'
         description='Available items you can order'
-        menu={filteredMenu}
+        menu={menu}
         onDelete={(id) =>
           setMenu(menu.filter((menuItem) => menuItem.id !== id))
         }
