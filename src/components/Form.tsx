@@ -1,10 +1,14 @@
-import { FormEvent } from "react"
+import { FormEvent, useRef } from "react"
 import SubmitButton from "./SubmitButton"
 
 export default function Form() {
 
+    const menuItemRef = useRef<HTMLInputElement>(null)
+    const priceRef = useRef<HTMLInputElement>(null)
+
     const handleSumbit = (event: FormEvent) => {
         event.preventDefault()
+        console.log(menuItemRef.current?.value, priceRef.current?.value)
     }
 
   return (
@@ -19,6 +23,7 @@ export default function Form() {
         <div className='mt-2'>
           <input
             type='text'
+            ref={menuItemRef}
             id='menu-item-name'
             placeholder='Americano'
             className='block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-500 sm:text-sm sm:leading-6'
@@ -35,8 +40,10 @@ export default function Form() {
         </label>
         <div className='mt-2'>
           <input
-            type='number'
             id='price'
+            type='number'
+            ref={priceRef}
+            step='.01'
             placeholder='Price'
             className='block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-500 sm:text-sm sm:leading-6'
           />
