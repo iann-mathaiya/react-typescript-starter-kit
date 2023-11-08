@@ -1,12 +1,12 @@
 import { useState } from "react"
+import Cart from "./components/Cart"
 import Like from "./components/Like"
 import Alert from "./components/Alert"
+import NavBar from "./components/NavBar"
 import Button from "./components/Button"
+import Reviews from "./components/Reviews"
 import ListGroup from "./components/ListGroup"
 import { PaperAirplaneIcon } from "@heroicons/react/24/solid"
-import NavBar from "./components/NavBar"
-import Cart from "./components/Cart"
-import ExpandableText from "./components/ExpandableText"
 
 export default function App() {
   const [alertVisibility, setAlertVisiblity] = useState(false)
@@ -165,43 +165,7 @@ export default function App() {
         <Button onClick={handleAddCity}>Add New City</Button>
       </div>
 
-      <div>
-        <div className='space-y-4'>
-          <h1 className='text-2xl text-slate-800 font-semibold'>Reviews</h1>
-          <ExpandableText maxCharacters={200}>
-            I recently enjoyed a cup of coffee at Sweet Sweet Kahawa, and it was
-            an absolute treat. The Sweet Sweet Kahawa was perfectly balanced,
-            with a rich, robust flavor and a hint of sweetness. The staff was
-            friendly and knowledgeable, adding to the overall positive
-            experience. I was impressed by the attention to detail, from the
-            beautiful latte art to the well-crafted mugs. It was more than just
-            coffee; it was a delightful experience. I can't wait to return and
-            explore more of their offerings. If you love coffee, this place is a
-            must-visit.
-          </ExpandableText>
-          <ExpandableText>Very Tasty Coffee</ExpandableText>
-
-          <ExpandableText maxCharacters={400}>
-            I recently had the pleasure of savoring a cup of coffee at Sweet
-            Sweet Kahawa, and it was an absolutely delightful experience. From
-            the moment I stepped in, the cozy ambiance and the inviting aroma of
-            freshly brewed coffee created the perfect setting. The barista's
-            passion for their craft was evident in every sip of the coffee. I
-            ordered a Sweet Sweet Kahawa and was treated to a perfectly balanced
-            brew. The coffee had a rich, robust flavor with just the right hint
-            of sweetness, making it a true delight for the taste buds. It was
-            evident that the coffee beans had been carefully sourced and
-            expertly roasted. The service was exceptional, and the staff was not
-            only friendly but also knowledgeable about their coffee offerings.
-            They took the time to explain the unique characteristics of the
-            coffee I chose, making the experience all the more engaging. As I
-            enjoyed my coffee, I couldn't help but appreciate the attention to
-            detail that went into the entire presentation. From the beautiful
-            latte art to the well-crafted mugs, every aspect of the coffee's
-            presentation was aesthetically pleasing.
-          </ExpandableText>
-        </div>
-      </div>
+      <Reviews />
     </div>
   )
 }

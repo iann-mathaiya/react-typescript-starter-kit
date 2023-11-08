@@ -20,7 +20,7 @@ export default function ListGroup({
     <div className="space-y-2">
       <h1 className='text-2xl text-slate-800 font-semibold'>{heading}</h1>
       {list.length === 0 && (
-        <h2 className=' text-stone-500 font-medium'>No items added yet.</h2>
+        <h2 className=' text-slate-500 font-medium'>No items added yet.</h2>
       )}
       <ul className='list-disc list-outside'>
         {list.map((item, index) => (
@@ -32,8 +32,8 @@ export default function ListGroup({
             }}
             className={
               selectedIndex === index
-                ? "w-fit text-stone-600 font-semibold cursor-default"
-                : "w-fit text-stone-500 font-normal cursor-pointer"
+                ? "w-fit text-slate-600 font-semibold cursor-default"
+                : "w-fit text-slate-500 font-normal cursor-pointer"
             }
           >
             {item}
