@@ -56,13 +56,15 @@ export default function App() {
   })
 
   const [users, setUsers] = useState<User[]>([])
+  const [error, setError] = useState("")
 
   useEffect(() => {
     document.title = "Sweet Sweet Kahawa"
 
     axios
-      .get<User[]>("https://jsonplaceholder.typicode.com/users")
+      .get<User[]>("https://jsonplaceholder.typicode.com/xusers")
       .then((response) => setUsers(response.data))
+      .catch((error) => setError(error.message))
   }, [])
 
   const handleSelectItem = (item: string) => {
@@ -219,18 +221,22 @@ export default function App() {
 
       <Divider />
 
-      <div className="space-y-4">
-        {users.map((user) => (
-          <div key={user.id}>
-            <h3 className='text-lg text-slate-800 font-medium'>
-              {user.name}
-            </h3>
-            <h4 className='text-sm text-slate-500 font-normal'>
-              {user.address.zipcode} -{" "}
-              {user.address.city}
-            </h4>
-          </div>
-        ))}
+      <div className='space-y-4'>
+        {error && <div>
+          <p className="text-base text-red-500 font-medium">{error}</p>
+          </div>}
+
+        {!error &&
+          users.map((user) => (
+            <div key={user.id}>
+              <h3 className='text-lg text-slate-800 font-medium'>
+                {user.name}
+              </h3>
+              <h4 className='text-sm text-slate-500 font-normal'>
+                {user.address.zipcode} - {user.address.city}
+              </h4>
+            </div>
+          ))}
       </div>
     </div>
   )
