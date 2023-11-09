@@ -1,4 +1,4 @@
-import axios from "axios"
+import axios, { AxiosError } from "axios"
 import { useEffect, useState } from "react"
 
 import Like from "./components/Like"
@@ -61,10 +61,16 @@ export default function App() {
   useEffect(() => {
     document.title = "Sweet Sweet Kahawa"
 
-    axios
-      .get<User[]>("https://jsonplaceholder.typicode.com/xusers")
-      .then((response) => setUsers(response.data))
-      .catch((error) => setError(error.message))
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get<User[]>(
+          "https://jsonplaceholder.typicode.com/xusers"
+        )
+        setUsers(response.data)
+      } catch (error) {
+        setError((error as AxiosError).message)
+      }
+    }
   }, [])
 
   const handleSelectItem = (item: string) => {
@@ -222,9 +228,11 @@ export default function App() {
       <Divider />
 
       <div className='space-y-4'>
-        {error && <div>
-          <p className="text-base text-red-500 font-medium">{error}</p>
-          </div>}
+        {error && (
+          <div>
+            <p className='text-base text-red-500 font-medium'>{error}</p>
+          </div>
+        )}
 
         {!error &&
           users.map((user) => (
