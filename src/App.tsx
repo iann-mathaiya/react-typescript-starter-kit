@@ -1,10 +1,12 @@
-import axios, { AxiosError, CanceledError, all } from "axios"
 import { useEffect, useState } from "react"
+import apiClient, { AxiosError, CanceledError } from "./services/api-client"
 
+import { User } from "./lib/users"
 import Like from "./components/Like"
 import Alert from "./components/Alert"
 import NavBar from "./components/NavBar"
 import Button from "./components/Button"
+import Loader from "./components/Loader"
 import Reviews from "./components/Reviews"
 import Divider from "./components/Divider"
 import { menuItems } from "./lib/menuItems"
@@ -14,8 +16,6 @@ import { PaperAirplaneIcon } from "@heroicons/react/24/solid"
 import MenuList from "./components/menu-tracker/components/MenuList"
 import MenuFilter from "./components/menu-tracker/components/MenuFilter"
 import MenuItemForm from "./components/menu-tracker/components/MenuItemForm"
-import { User } from "./lib/users"
-import Loader from "./components/Loader"
 
 export default function App() {
   const [alertVisibility, setAlertVisiblity] = useState(false)
@@ -67,8 +67,8 @@ export default function App() {
 
     setIsLoading(true)
 
-    axios
-      .get<User[]>("https://jsonplaceholder.typicode.com/users", {
+    apiClient
+      .get<User[]>("/users", {
         signal: controller.signal,
       })
       .then((response) => {
@@ -95,8 +95,8 @@ export default function App() {
     }
     setUsers([newUser, ...users])
 
-    axios
-      .post<User>("https://jsonplaceholder.typicode.com/users", newUser)
+    apiClient
+      .post<User>("/users", newUser)
       .then((response) => {
         setUsers([response.data, ...users])
       })
@@ -112,9 +112,9 @@ export default function App() {
     const updatedUser = { ...user, name: "Hange Zoe" }
     setUsers(users.map((u) => (u.id === user.id ? updatedUser : u)))
 
-    axios
+    apiClient
       .patch<User>(
-        "https://jsonplaceholder.typicode.com/users/" + user.id,
+        "/users/" + user.id,
         updatedUser
       )
       .catch((error) => {
@@ -127,8 +127,8 @@ export default function App() {
     const allUsers = [...users]
     setUsers(users.filter((u) => u.id !== user.id))
 
-    axios
-      .delete<User>("https://jsonplaceholder.typicode.com/users/" + user.id)
+    apiClient
+      .delete<User>("/users/" + user.id)
       .catch((error) => {
         setError(error.message)
         setUsers(allUsers)
@@ -325,7 +325,7 @@ export default function App() {
 
                 <button
                   onClick={() => deleteUser(user)}
-                  className='py-1 px-2 text-sm w-fit h-fit text-slate-500 hover:text-red-500 bg-slate-100 hover:bg-red-100 rounded-md'
+                  className='py-1 px-2 text-sm w-fit h-fit text-red-500 bg-red-50 hover:bg-red-100 rounded-md'
                 >
                   Delete User 🗑️
                 </button>
