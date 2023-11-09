@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import apiClient, { AxiosError, CanceledError } from "./services/api-client"
+import { AxiosError, CanceledError } from "./services/api-client"
 
 import { User } from "./lib/users"
 import Like from "./components/Like"
@@ -16,6 +16,7 @@ import { PaperAirplaneIcon } from "@heroicons/react/24/solid"
 import MenuList from "./components/menu-tracker/components/MenuList"
 import MenuFilter from "./components/menu-tracker/components/MenuFilter"
 import MenuItemForm from "./components/menu-tracker/components/MenuItemForm"
+import userService from "./services/user-service"
 
 export default function App() {
   const [alertVisibility, setAlertVisiblity] = useState(false)
@@ -63,14 +64,11 @@ export default function App() {
   useEffect(() => {
     document.title = "Sweet Sweet Kahawa"
 
-    const controller = new AbortController()
-
     setIsLoading(true)
 
-    apiClient
-      .get<User[]>("/users", {
-        signal: controller.signal,
-      })
+    const { request, cancel } = userService.getAllUsers()
+
+    request
       .then((response) => {
         setUsers(response.data)
         setIsLoading(false)
@@ -84,7 +82,7 @@ export default function App() {
         setIsLoading(false)
       })
 
-    return () => controller.abort()
+    return () => cancel()
   }, [])
 
   const addUser = () => {
@@ -95,8 +93,8 @@ export default function App() {
     }
     setUsers([newUser, ...users])
 
-    apiClient
-      .post<User>("/users", newUser)
+    userService
+      .createUser(newUser)
       .then((response) => {
         setUsers([response.data, ...users])
       })
@@ -110,29 +108,23 @@ export default function App() {
     const originalUsers = [...users]
 
     const updatedUser = { ...user, name: "Hange Zoe" }
+
     setUsers(users.map((u) => (u.id === user.id ? updatedUser : u)))
 
-    apiClient
-      .patch<User>(
-        "/users/" + user.id,
-        updatedUser
-      )
-      .catch((error) => {
-        setError(error.message)
-        setUsers(originalUsers)
-      })
+    userService.updateUserById(updatedUser).catch((error) => {
+      setError(error.message)
+      setUsers(originalUsers)
+    })
   }
 
   const deleteUser = (user: User) => {
     const allUsers = [...users]
     setUsers(users.filter((u) => u.id !== user.id))
 
-    apiClient
-      .delete<User>("/users/" + user.id)
-      .catch((error) => {
-        setError(error.message)
-        setUsers(allUsers)
-      })
+    userService.deleteUserById(user.id).catch((error) => {
+      setError(error.message)
+      setUsers(allUsers)
+    })
   }
 
   const handleSelectItem = (item: string) => {
