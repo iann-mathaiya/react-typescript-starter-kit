@@ -1,4 +1,4 @@
-import axios, { AxiosError, CanceledError } from "axios"
+import axios, { AxiosError, CanceledError, all } from "axios"
 import { useEffect, useState } from "react"
 
 import Like from "./components/Like"
@@ -58,7 +58,7 @@ export default function App() {
 
   const [users, setUsers] = useState<User[]>([])
   const [error, setError] = useState("")
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     document.title = "Sweet Sweet Kahawa"
@@ -73,19 +73,67 @@ export default function App() {
       })
       .then((response) => {
         setUsers(response.data)
-        // setIsLoading(false)
+        setIsLoading(false)
       })
       .catch((error) => {
         if (error instanceof CanceledError) return
         setError((error as AxiosError).message)
-        // setIsLoading(false)
+        setIsLoading(false)
       })
       .finally(() => {
-        // setIsLoading(false)
+        setIsLoading(false)
       })
 
     return () => controller.abort()
   }, [])
+
+  const addUser = () => {
+    const newUser: User = {
+      id: 11,
+      name: "Annie Leonhart",
+      address: { city: "Paradis Island", zipcode: 560890 },
+    }
+    setUsers([newUser, ...users])
+
+    axios
+      .post<User>("https://jsonplaceholder.typicode.com/users", newUser)
+      .then((response) => {
+        setUsers([response.data, ...users])
+      })
+      .catch((error) => {
+        if (error instanceof CanceledError) return
+        setError((error as AxiosError).message)
+      })
+  }
+
+  const updateUser = (user: User) => {
+    const originalUsers = [...users]
+
+    const updatedUser = { ...user, name: "Hange Zoe" }
+    setUsers(users.map((u) => (u.id === user.id ? updatedUser : u)))
+
+    axios
+      .patch<User>(
+        "https://jsonplaceholder.typicode.com/users/" + user.id,
+        updatedUser
+      )
+      .catch((error) => {
+        setError(error.message)
+        setUsers(originalUsers)
+      })
+  }
+
+  const deleteUser = (user: User) => {
+    const allUsers = [...users]
+    setUsers(users.filter((u) => u.id !== user.id))
+
+    axios
+      .delete<User>("https://jsonplaceholder.typicode.com/users/" + user.id)
+      .catch((error) => {
+        setError(error.message)
+        setUsers(allUsers)
+      })
+  }
 
   const handleSelectItem = (item: string) => {
     alert(`${item} selected`)
@@ -242,6 +290,11 @@ export default function App() {
       <Divider />
 
       <div className='space-y-4'>
+        <div className='flex items-center justify-between'>
+          <h1 className='text-2xl text-slate-800 font-semibold'>Customers</h1>
+          <Button onClick={addUser}>Add Customer</Button>
+        </div>
+
         {error && (
           <div>
             <p className='text-base text-red-500 font-medium'>{error}</p>
@@ -252,13 +305,31 @@ export default function App() {
 
         {!error &&
           users.map((user) => (
-            <div key={user.id}>
-              <h3 className='text-lg text-slate-800 font-medium'>
-                {user.name}
-              </h3>
-              <h4 className='text-sm text-slate-500 font-normal'>
-                {user.address.zipcode} - {user.address.city}
-              </h4>
+            <div key={user.id} className='flex items-center justify-between'>
+              <div>
+                <h3 className='text-lg text-slate-800 font-medium'>
+                  {user.name}
+                </h3>
+                <h4 className='text-sm text-slate-500 font-normal'>
+                  {user.address.zipcode} - {user.address.city}
+                </h4>
+              </div>
+
+              <div className='space-x-2'>
+                <button
+                  onClick={() => updateUser(user)}
+                  className='py-1 px-2 text-sm w-fit h-fit text-slate-500 hover:text-white bg-slate-100 hover:bg-sky-500 rounded-md'
+                >
+                  Update User 🫡
+                </button>
+
+                <button
+                  onClick={() => deleteUser(user)}
+                  className='py-1 px-2 text-sm w-fit h-fit text-slate-500 hover:text-red-500 bg-slate-100 hover:bg-red-100 rounded-md'
+                >
+                  Delete User 🗑️
+                </button>
+              </div>
             </div>
           ))}
       </div>
