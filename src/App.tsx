@@ -1,3 +1,4 @@
+import axios from "axios"
 import { useEffect, useState } from "react"
 
 import Like from "./components/Like"
@@ -5,13 +6,15 @@ import Alert from "./components/Alert"
 import NavBar from "./components/NavBar"
 import Button from "./components/Button"
 import Reviews from "./components/Reviews"
+import Divider from "./components/Divider"
 import { menuItems } from "./lib/menuItems"
 import ListGroup from "./components/ListGroup"
 import Cart from "./components/cart/components/Cart"
 import { PaperAirplaneIcon } from "@heroicons/react/24/solid"
 import MenuList from "./components/menu-tracker/components/MenuList"
-import MenuItemForm from "./components/menu-tracker/components/MenuItemForm"
 import MenuFilter from "./components/menu-tracker/components/MenuFilter"
+import MenuItemForm from "./components/menu-tracker/components/MenuItemForm"
+import { User } from "./lib/users"
 
 export default function App() {
   const [alertVisibility, setAlertVisiblity] = useState(false)
@@ -52,8 +55,14 @@ export default function App() {
     },
   })
 
+  const [users, setUsers] = useState<User[]>([])
+
   useEffect(() => {
     document.title = "Sweet Sweet Kahawa"
+
+    axios
+      .get<User[]>("https://jsonplaceholder.typicode.com/users")
+      .then((response) => setUsers(response.data))
   }, [])
 
   const handleSelectItem = (item: string) => {
@@ -118,7 +127,7 @@ export default function App() {
 
       {/* <Cart cartItems={cartItems} onClear={handleClearCartItems} /> */}
 
-      <div className="flex justify-between">
+      <div className='flex justify-between'>
         <Cart category={selectedCategory} />
         <MenuFilter
           onSelectCategory={(category) => setSelectedCategory(category)}
@@ -207,6 +216,22 @@ export default function App() {
       </div>
 
       <Reviews />
+
+      <Divider />
+
+      <div className="space-y-4">
+        {users.map((user) => (
+          <div key={user.id}>
+            <h3 className='text-lg text-slate-800 font-medium'>
+              {user.name}
+            </h3>
+            <h4 className='text-sm text-slate-500 font-normal'>
+              {user.address.zipcode} -{" "}
+              {user.address.city}
+            </h4>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }

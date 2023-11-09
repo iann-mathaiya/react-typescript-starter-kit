@@ -8,7 +8,7 @@ export default function Cart({ category }: { category: string }) {
 
   useEffect(() => {
     if (category) {
-      return console.log(
+      console.log(
         `fetching cart items in the ${category.toLowerCase()} category`
       )
     } else {
