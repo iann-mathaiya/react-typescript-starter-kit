@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import Cart from "./components/Cart"
+
 import Like from "./components/Like"
 import Alert from "./components/Alert"
 import NavBar from "./components/NavBar"
@@ -7,9 +7,11 @@ import Button from "./components/Button"
 import Reviews from "./components/Reviews"
 import { menuItems } from "./lib/menuItems"
 import ListGroup from "./components/ListGroup"
+import Cart from "./components/cart/components/Cart"
 import { PaperAirplaneIcon } from "@heroicons/react/24/solid"
 import MenuList from "./components/menu-tracker/components/MenuList"
 import MenuItemForm from "./components/menu-tracker/components/MenuItemForm"
+import MenuFilter from "./components/menu-tracker/components/MenuFilter"
 
 export default function App() {
   const [alertVisibility, setAlertVisiblity] = useState(false)
@@ -26,6 +28,8 @@ export default function App() {
   ])
 
   const [menu, setMenu] = useState(menuItems)
+
+  const [selectedCategory, setSelectedCategory] = useState("")
 
   const [cities, setCities] = useState(["Nairobi", "Tokyo", "Sydney"])
 
@@ -49,7 +53,7 @@ export default function App() {
   })
 
   useEffect(() => {
-    document.title = 'Sweet Sweet Kahawa'
+    document.title = "Sweet Sweet Kahawa"
   }, [])
 
   const handleSelectItem = (item: string) => {
@@ -112,7 +116,14 @@ export default function App() {
         <NavBar cartItemsCount={cartItems.length} />
       </div>
 
-      <Cart cartItems={cartItems} onClear={handleClearCartItems} />
+      {/* <Cart cartItems={cartItems} onClear={handleClearCartItems} /> */}
+
+      <div className="flex justify-between">
+        <Cart category={selectedCategory} />
+        <MenuFilter
+          onSelectCategory={(category) => setSelectedCategory(category)}
+        />
+      </div>
 
       <MenuList
         heading='Menu'
