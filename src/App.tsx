@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Cart from "./components/Cart"
 import Like from "./components/Like"
 import Alert from "./components/Alert"
@@ -47,6 +47,10 @@ export default function App() {
       zipCode: 10100,
     },
   })
+
+  useEffect(() => {
+    document.title = 'Sweet Sweet Kahawa'
+  }, [])
 
   const handleSelectItem = (item: string) => {
     alert(`${item} selected`)
