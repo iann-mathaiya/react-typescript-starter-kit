@@ -7,8 +7,13 @@ export default function Cart({ category }: { category: string }) {
   const [cart, setCart] = useState<CartItems[]>([])
 
   useEffect(() => {
-    console.log("fetching cart items")
-    if (category) console.log("fetching cart items", category)
+    if (category) {
+      return console.log(
+        `fetching cart items in the ${category.toLowerCase()} category`
+      )
+    } else {
+      console.log("fetching cart items")
+    }
     setCart(cartItems)
   }, [category])
 
