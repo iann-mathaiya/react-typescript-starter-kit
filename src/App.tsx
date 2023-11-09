@@ -1,4 +1,4 @@
-import axios, { AxiosError } from "axios"
+import axios, { AxiosError, CanceledError } from "axios"
 import { useEffect, useState } from "react"
 
 import Like from "./components/Like"
@@ -57,20 +57,33 @@ export default function App() {
 
   const [users, setUsers] = useState<User[]>([])
   const [error, setError] = useState("")
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     document.title = "Sweet Sweet Kahawa"
 
-    const fetchUsers = async () => {
-      try {
-        const response = await axios.get<User[]>(
-          "https://jsonplaceholder.typicode.com/xusers"
-        )
+    const controller = new AbortController()
+
+    setIsLoading(true)
+
+    axios
+      .get<User[]>("https://jsonplaceholder.typicode.com/users", {
+        signal: controller.signal,
+      })
+      .then((response) => {
         setUsers(response.data)
-      } catch (error) {
+        // setIsLoading(false)
+      })
+      .catch((error) => {
+        if (error instanceof CanceledError) return
         setError((error as AxiosError).message)
-      }
-    }
+        // setIsLoading(false)
+      })
+      .finally(() => {
+        // setIsLoading(false)
+      })
+
+    return () => controller.abort()
   }, [])
 
   const handleSelectItem = (item: string) => {
@@ -231,6 +244,16 @@ export default function App() {
         {error && (
           <div>
             <p className='text-base text-red-500 font-medium'>{error}</p>
+          </div>
+        )}
+
+        {isLoading && (
+          <div className='relative w-fit flex justify-center items-center'>
+            <p className='py-1 px-2 text-sm text-sky-500 rounded-md'>Loading</p>
+            <span className='relative flex h-4 w-4 justify-center items-center'>
+              <span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75'></span>
+              <span className='relative inline-flex rounded-full h-2 w-2 bg-sky-500'></span>
+            </span>
           </div>
         )}
 
