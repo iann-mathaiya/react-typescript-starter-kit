@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import UserService from "./services/user-service"
 import { AxiosError, CanceledError } from "./services/api-client"
 
 import { User } from "./lib/users"
@@ -16,7 +17,6 @@ import { PaperAirplaneIcon } from "@heroicons/react/24/solid"
 import MenuList from "./components/menu-tracker/components/MenuList"
 import MenuFilter from "./components/menu-tracker/components/MenuFilter"
 import MenuItemForm from "./components/menu-tracker/components/MenuItemForm"
-import userService from "./services/user-service"
 
 export default function App() {
   const [alertVisibility, setAlertVisiblity] = useState(false)
@@ -66,7 +66,7 @@ export default function App() {
 
     setIsLoading(true)
 
-    const { request, cancel } = userService.getAllUsers()
+    const { request, cancel } = UserService.getAll<User>()
 
     request
       .then((response) => {
@@ -93,8 +93,8 @@ export default function App() {
     }
     setUsers([newUser, ...users])
 
-    userService
-      .createUser(newUser)
+    UserService
+      .create(newUser)
       .then((response) => {
         setUsers([response.data, ...users])
       })
@@ -111,7 +111,7 @@ export default function App() {
 
     setUsers(users.map((u) => (u.id === user.id ? updatedUser : u)))
 
-    userService.updateUserById(updatedUser).catch((error) => {
+    UserService.update(updatedUser).catch((error) => {
       setError(error.message)
       setUsers(originalUsers)
     })
@@ -121,7 +121,7 @@ export default function App() {
     const allUsers = [...users]
     setUsers(users.filter((u) => u.id !== user.id))
 
-    userService.deleteUserById(user.id).catch((error) => {
+    UserService.delete(user.id).catch((error) => {
       setError(error.message)
       setUsers(allUsers)
     })
