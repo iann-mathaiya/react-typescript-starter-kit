@@ -17,6 +17,7 @@ import { PaperAirplaneIcon } from "@heroicons/react/24/solid"
 import MenuList from "./components/menu-tracker/components/MenuList"
 import MenuFilter from "./components/menu-tracker/components/MenuFilter"
 import MenuItemForm from "./components/menu-tracker/components/MenuItemForm"
+import useUsers from "./hooks/useUsers"
 
 export default function App() {
   const [alertVisibility, setAlertVisiblity] = useState(false)
@@ -57,33 +58,11 @@ export default function App() {
     },
   })
 
-  const [users, setUsers] = useState<User[]>([])
-  const [error, setError] = useState("")
-  const [isLoading, setIsLoading] = useState(false)
-
   useEffect(() => {
     document.title = "Sweet Sweet Kahawa"
-
-    setIsLoading(true)
-
-    const { request, cancel } = UserService.getAll<User>()
-
-    request
-      .then((response) => {
-        setUsers(response.data)
-        setIsLoading(false)
-      })
-      .catch((error) => {
-        if (error instanceof CanceledError) return
-        setError((error as AxiosError).message)
-        setIsLoading(false)
-      })
-      .finally(() => {
-        setIsLoading(false)
-      })
-
-    return () => cancel()
   }, [])
+
+  const { users, error, isLoading, setUsers, setError } = useUsers()
 
   const addUser = () => {
     const newUser: User = {
@@ -93,8 +72,7 @@ export default function App() {
     }
     setUsers([newUser, ...users])
 
-    UserService
-      .create(newUser)
+    UserService.create(newUser)
       .then((response) => {
         setUsers([response.data, ...users])
       })
