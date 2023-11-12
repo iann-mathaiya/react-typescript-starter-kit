@@ -1,3 +1,4 @@
+import useUsers from "./hooks/useUsers"
 import { useEffect, useState } from "react"
 import UserService from "./services/user-service"
 import { AxiosError, CanceledError } from "./services/api-client"
@@ -17,7 +18,6 @@ import { PaperAirplaneIcon } from "@heroicons/react/24/solid"
 import MenuList from "./components/menu-tracker/components/MenuList"
 import MenuFilter from "./components/menu-tracker/components/MenuFilter"
 import MenuItemForm from "./components/menu-tracker/components/MenuItemForm"
-import useUsers from "./hooks/useUsers"
 
 export default function App() {
   const [alertVisibility, setAlertVisiblity] = useState(false)
